@@ -19,29 +19,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-
         $roleSuper = Role::create(['name' => 'super-admin']);
-        $roleNasabah = Role::create(['name' => 'nasabah']);
-        $roleKabag = Role::create(['name' => 'kabag']);
-
 
         $user = \App\Models\User::create([
-            'name' => 'Endang',
-            'email' => 'endang@super',
-            'alamat' => 'Super',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'alamat' => 'Magelang',
             'no_telepon' => '085156182381',
-            'password' => bcrypt('qwerty123'),
+            'password' => bcrypt('password'),
         ]);
 
-        $kabag = \App\Models\User::create([
-            'name' => 'endang',
-            'email' => 'endang@kabag',
-            'alamat' => 'Super',
-            'no_telepon' => '085156182381',
-            'password' => bcrypt('qwerty123'),
-        ]);
         $user->assignRole("super-admin");
-        $kabag->assignRole("kabag");
     }
 }

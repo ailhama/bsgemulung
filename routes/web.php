@@ -28,75 +28,28 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
-    // return view('welcome');
 });
 
-
 Route::get('/admin/dashboard', function () {
-    $totalNasabah = User::role('nasabah')->count();
     $totalSampah = Sampah::count();
-    return view('admin.dashboard', compact('totalNasabah', 'totalSampah'));
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-Route::get('/nasabah/dashboard', function () {
-    $totalSampah = Sampah::where('user_id', auth()->id())->count();
-
-    $totalBerat = Sampah::where('user_id', auth()->id())->where('status', 'terima')->sum('berat');
-    return view('nasabah.dashboard', compact('totalSampah', 'totalBerat'));
+    return view('admin.dashboard', compact('totalSampah'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('/admin/master-data/users', [UserController::class, 'index'])->name('admin.users.index');
-    Route::get('/admin/master-data/users/create', [UserController::class, 'create'])->name('admin.users.create');
-    Route::get('/admin/master-data/users/{user}', [UserController::class, 'show'])->name('admin.users.show');
-
-    Route::get('/admin/master-data/nasabah', [NasabahController::class, 'index'])->name('admin.nasabah.index');
-    Route::get('/admin/master-data/nasabah/create', [NasabahController::class, 'create'])->name('admin.nasabah.create');
-    Route::get('/admin/master-data/nasabah/{user}', [NasabahController::class, 'show'])->name('admin.nasabah.show');
-
-    Route::get('/admin/sampah-masuk', [AdminSampahMasukController::class, 'index']);
-    Route::get('/admin/sampah/{sampah}/terima', [AdminSampahMasukController::class, 'terima']);
-    Route::get('/admin/sampah/{sampah}/tolak', [AdminSampahMasukController::class, 'tolak']);
-
 
     Route::get('/admin/sampah', [AdminSampahController::class, 'index']);
     Route::post('/admin/sampah', [AdminSampahController::class, 'store']);
+    Route::get('/admin/sampah/{id}/edit', [AdminSampahController::class, 'edit'])->name('sampah.edit');
     Route::delete('/admin/sampah/{sampah}', [AdminSampahController::class, 'destroy']);
 
-    Route::put('/admin/sampah/{sampah}', [AdminSampahController::class, 'update']);
-    Route::get('/admin/sampah/{id}/edit', [AdminSampahController::class, 'edit'])->name('sampah.edit');
-    Route::get('/admin/sampah', [AdminSampahController::class, 'index'])->name('sampah.index');
+    Route::get('/auth/ubah-password', [ProfileController::class, 'PasswordForm'])->name('password.ubah');
+    Route::post('/auth/ubah-password', [ProfileController::class, 'ubahPassword'])->name('password.update');
 
-    Route::get('/admin/tabungan-sampah', [AdminTabunganController::class, 'index']);
-    Route::get('/admin/tabungan-sampah/{user}/ambil', [AdminTabunganController::class, 'ambilSaldo']);
+    Route::get('/laporan/sampah', [LaporanSampahController::class, 'index']);
+    Route::get('/laporan/sampah/cetak/term/{term}', [LaporanSampahController::class, 'cetak']);
+    Route::get('/laporan/sampah/cetak/{sampah}', [LaporanSampahController::class, 'cetakPerUser'])->name('laporan.sampah.cetak.peruser');
 
-
-
-    Route::get('/nasabah/sampah', [NasabahSampahController::class, 'index']);
-    Route::post('/nasabah/sampah', [NasabahSampahController::class, 'store']);
-    Route::delete('/nasabah/sampah/{sampah}', [NasabahSampahController::class, 'destroy']);
-
-
-    Route::get('/nasabah/saldo', [NasabahSaldoController::class, 'index']);
-
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/admin/developer', [DeveloperController::class, 'index'])->name('developer.index');
 });
-
-Route::middleware('auth')->group(function () {
-    // Rute lainnya...
-
-    Route::put('/admin/sampah/{sampah}', [AdminSampahController::class, 'update'])->name('sampah.update');
-});
-
-Route::get('/laporan/sampah', [LaporanSampahController::class, 'index']);
-Route::get('/laporan/sampah/cetak/term/{term}', [LaporanSampahController::class, 'cetak']);
-Route::get('/laporan/sampah/cetak/{sampah}', [LaporanSampahController::class, 'cetakPerUser'])->name('laporan.sampah.cetak.peruser');
-
-Route::get('/admin/developer', [DeveloperController::class, 'index'])->name('developer.index');
 
 require __DIR__ . '/auth.php';

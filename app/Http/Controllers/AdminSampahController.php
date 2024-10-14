@@ -27,12 +27,12 @@ class AdminSampahController extends Controller
         return view('admin.sampah.edit', compact('sampah'));
     }
 
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $valData = $request->validate([
             'deskripsi' => 'nullable',
             'jenis_sampah' => 'required',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Aturan validasi untuk gambar
+            // 'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Aturan validasi untuk gambar
             'nama' => 'nullable',
             'harga' => 'nullable',
             'berat' => 'nullable',
@@ -43,17 +43,17 @@ class AdminSampahController extends Controller
 
         // Periksa apakah ada gambar baru diunggah
         if ($request->hasFile('gambar')) {
-        // Hapus gambar lama (jika ada)
-        if ($sampah->gambar) {
-            unlink(public_path('storage/gambar/' . $sampah->gambar));
-        }
+            // Hapus gambar lama (jika ada)
+            if ($sampah->gambar) {
+                unlink(public_path('storage/gambar/' . $sampah->gambar));
+            }
 
-        // Simpan gambar baru
-        $gambar = $request->file('gambar');
-        $imageName = time() . '.' . $gambar->extension();
-        $gambar->move(public_path('storage/gambar'), $imageName);
-        $valData['gambar'] = $imageName;
-    }
+            // Simpan gambar baru
+            $gambar = $request->file('gambar');
+            $imageName = time() . '.' . $gambar->extension();
+            $gambar->move(public_path('storage/gambar'), $imageName);
+            $valData['gambar'] = $imageName;
+        }
 
         $sampah->update($valData);
 
@@ -68,7 +68,7 @@ class AdminSampahController extends Controller
         $valData = $request->validate([
             'deskripsi' => 'nullable',
             'jenis_sampah' => 'required',
-            'gambar' => 'required',
+            // 'gambar' => 'required',
             'nama' => 'nullable',
             'harga' => 'nullable',
             'berat' => 'nullable',
