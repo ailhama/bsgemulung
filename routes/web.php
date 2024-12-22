@@ -37,9 +37,10 @@ Route::get('/admin/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/admin/sampah', [AdminSampahController::class, 'index']);
+    Route::get('/admin/sampah', [AdminSampahController::class, 'index'])->name('sampah.index');
     Route::post('/admin/sampah', [AdminSampahController::class, 'store']);
     Route::get('/admin/sampah/{id}/edit', [AdminSampahController::class, 'edit'])->name('sampah.edit');
+    Route::put('/admin/sampah/{id}', [AdminSampahController::class, 'update'])->name('sampah.update');
     Route::delete('/admin/sampah/{sampah}', [AdminSampahController::class, 'destroy']);
 
     Route::get('/auth/ubah-password', [ProfileController::class, 'PasswordForm'])->name('password.ubah');
