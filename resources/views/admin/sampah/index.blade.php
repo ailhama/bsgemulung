@@ -78,7 +78,7 @@
                                     <td>{{ $data->created_at->format('d M Y') }}</td>
                                     <td>{{ $data->nama }}</td>
                                     <td>{{ $data->jenis_sampah }}</td>
-                                    <td>{{ $data->berat }}</td>
+                                    <td>{{ $data->berat }} kg</td>
                                     <td>{{ $data->deskripsi }}</td>
                                     <td>
                                         <a href="{{ route('sampah.edit', $data->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>

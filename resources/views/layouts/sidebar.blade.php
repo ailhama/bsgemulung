@@ -1,6 +1,6 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu  bg-primary">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-primary">
     <div class="app-brand demo">
-        <img src="{{ asset('assets/img/logo ppmt1.jpg') }}" alt="logo-ppmt-banyuwangi" style="width: 200px; margin-bottom: 10px; border-radius: 0%;">
+        <img src="{{ asset('assets/img/logo ppmt.jpg') }}" alt="logo-ppmt-banyuwangi" style="width: 200px; margin: auto; margin-bottom: 10px; border-radius: 8px;">
     </div>
     <div class="menu-inner-shadow"></div>
     <ul class="menu-inner py-1">
